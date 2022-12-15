@@ -3,6 +3,7 @@ package com.ponto.eletronico.form;
 import java.time.LocalTime;
 
 import com.ponto.eletronico.models.Escala;
+import com.ponto.eletronico.repository.EscalaRepository;
 
 public class EscalaForm {
 
@@ -53,6 +54,19 @@ public class EscalaForm {
 	
 	public Escala formulario() {
 		Escala escala = new Escala();
+		
+		escala.setCod(cod);
+		escala.setDiaSemana(diaSemana);
+		escala.setDiaTrabalhado(diaTrabalhado);
+		escala.setDsr(dsr);
+		escala.setEntrada(entrada);
+		escala.setSaida(saida);
+		
+		return escala;
+	}
+	
+	public Escala atualizar(Long id, EscalaRepository escalaRepository) {
+		Escala escala = escalaRepository.getReferenceById(id);
 		
 		escala.setCod(cod);
 		escala.setDiaSemana(diaSemana);

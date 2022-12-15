@@ -3,6 +3,7 @@ package com.ponto.eletronico.form;
 import java.time.LocalTime;
 
 import com.ponto.eletronico.models.TipoMarcacao;
+import com.ponto.eletronico.repository.TipoMarcacaoRepository;
 
 public class TipoMarcacaoForm {
 
@@ -38,6 +39,17 @@ public class TipoMarcacaoForm {
 	
 	public TipoMarcacao formulario() {
 		TipoMarcacao tipomarcacao = new TipoMarcacao();
+		
+		tipomarcacao.setCod(cod);
+		tipomarcacao.setDesc(desc);
+		tipomarcacao.setMax(max);
+		tipomarcacao.setMin(min);
+		
+		return tipomarcacao;
+	}
+	
+	public TipoMarcacao atualizar(Long id, TipoMarcacaoRepository tipoRepository) {
+		TipoMarcacao tipomarcacao = tipoRepository.getReferenceById(id);
 		
 		tipomarcacao.setCod(cod);
 		tipomarcacao.setDesc(desc);

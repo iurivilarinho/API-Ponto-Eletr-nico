@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import com.ponto.eletronico.models.Periodo;
 import com.ponto.eletronico.models.Turno;
 import com.ponto.eletronico.models.Usuario;
+import com.ponto.eletronico.repository.PeriodoRepository;
 import com.ponto.eletronico.repository.TurnoRepository;
 import com.ponto.eletronico.repository.UsuarioRepository;
 
@@ -84,6 +85,27 @@ public class PeriodoForm {
 		Turno turno = turnoRepository.getReferenceById(idTurno);
 		
 		Periodo periodo = new Periodo();
+		
+		periodo.setAno(ano);
+		periodo.setDiasNaoTrab(diasNaoTrab);
+		periodo.setFimCalculo(fimCalculo);
+		periodo.setIniCalculo(iniCalculo);
+		periodo.setMes(mes);
+		periodo.setQtdDias(qtdDias);
+		periodo.setIdTurno(turno);
+		periodo.setIdUsuario(usuario);
+		periodo.setHrDia(hrDia);
+		
+		return periodo;
+		
+	}
+	
+	public Periodo atualizar(Long id, PeriodoRepository periodoRepository, UsuarioRepository usuarioRepository, TurnoRepository turnoRepository) {
+		
+		Usuario usuario = usuarioRepository.getReferenceById(idUsuario);
+		Turno turno = turnoRepository.getReferenceById(idTurno);
+		
+		Periodo periodo = periodoRepository.getReferenceById(id);
 		
 		periodo.setAno(ano);
 		periodo.setDiasNaoTrab(diasNaoTrab);

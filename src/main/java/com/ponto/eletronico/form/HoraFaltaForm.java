@@ -5,6 +5,7 @@ import java.time.LocalTime;
 
 import com.ponto.eletronico.models.HoraFalta;
 import com.ponto.eletronico.models.Usuario;
+import com.ponto.eletronico.repository.HoraFaltaRepository;
 import com.ponto.eletronico.repository.UsuarioRepository;
 
 public class HoraFaltaForm {
@@ -55,6 +56,18 @@ public class HoraFaltaForm {
 		
 		Usuario usuario = usuarioRepository.getReferenceById(idUsuario);
 		HoraFalta horafalta = new HoraFalta();
+			
+		horafalta.setIdUsuario(usuario);
+		horafalta.setDia(dia);
+		horafalta.setHora(hora);
+		
+		return horafalta;
+	}
+	
+	public HoraFalta atualizar(Long id, HoraFaltaRepository faltaRepository, UsuarioRepository usuarioRepository) {
+		
+		Usuario usuario = usuarioRepository.getReferenceById(idUsuario);
+		HoraFalta horafalta = faltaRepository.getReferenceById(id);
 			
 		horafalta.setIdUsuario(usuario);
 		horafalta.setDia(dia);

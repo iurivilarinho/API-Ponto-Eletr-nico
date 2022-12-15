@@ -2,6 +2,7 @@ package com.ponto.eletronico.form;
 
 
 import com.ponto.eletronico.models.Usuario;
+import com.ponto.eletronico.repository.UsuarioRepository;
 
 public class UsuarioForm {
 
@@ -55,6 +56,19 @@ public class UsuarioForm {
 	
 	public Usuario formulario() {
 		Usuario usuario = new Usuario();
+		
+		usuario.setCpf(cpf);
+		usuario.setEmail(email);
+		usuario.setImg(img);
+		usuario.setNome(nome);
+		usuario.setSenha(senha);
+		usuario.setTelefone(telefone);
+		
+		return usuario;
+	}
+	
+	public Usuario atualizar(Long id,UsuarioRepository usuarioRepository) {
+		Usuario usuario = usuarioRepository.getReferenceById(id);
 		
 		usuario.setCpf(cpf);
 		usuario.setEmail(email);

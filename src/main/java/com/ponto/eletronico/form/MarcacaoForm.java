@@ -7,9 +7,11 @@ import com.ponto.eletronico.models.Marcacao;
 import com.ponto.eletronico.models.TipoMarcacao;
 import com.ponto.eletronico.models.Turno;
 import com.ponto.eletronico.models.Usuario;
+import com.ponto.eletronico.repository.MarcacaoRepository;
 import com.ponto.eletronico.repository.TipoMarcacaoRepository;
 import com.ponto.eletronico.repository.TurnoRepository;
 import com.ponto.eletronico.repository.UsuarioRepository;
+
 
 public class MarcacaoForm {
 
@@ -123,5 +125,24 @@ public class MarcacaoForm {
 		marcacao.setTipo(tipomarcacao);
 		
 		return marcacao;
+	}
+		
+	
+	public Marcacao atualizar(Long id, MarcacaoRepository marcacaoRepository, TurnoRepository turnoRepository, UsuarioRepository usuarioRepository, TipoMarcacaoRepository tipoRepository) {
+		Marcacao marcacao = marcacaoRepository.getReferenceById(id);
+		TipoMarcacao tipomarcacao = tipoRepository.getReferenceById(tipo);
+		Turno turno = turnoRepository.getReferenceById(idTurno);
+		Usuario usuario = usuarioRepository.getReferenceById(idUsuario);
+	
+		marcacao.setDia(dia);
+		marcacao.setHora(hora);
+		marcacao.setIdTurno(turno);
+		marcacao.setIdUsuario(usuario);
+		marcacao.setLatitude(latitude);
+		marcacao.setLongitude(longitude);
+		marcacao.setTipo(tipomarcacao);
+		
+		return marcacao;
+		
 	}
 }

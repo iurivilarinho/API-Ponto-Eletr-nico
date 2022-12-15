@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import com.ponto.eletronico.models.Escala;
 import com.ponto.eletronico.models.Turno;
 import com.ponto.eletronico.repository.EscalaRepository;
+import com.ponto.eletronico.repository.TurnoRepository;
 
 
 public class TurnoForm {
@@ -173,6 +174,25 @@ public class TurnoForm {
 	public Turno formulario(EscalaRepository escalaRepository) {
 		Escala escala = escalaRepository.getReferenceById(idEscala);
 		Turno turno = new Turno();
+		turno.setCod(cod);
+		turno.setDescricao(descricao);
+		turno.setFimHrNoturna(fimHrNoturna);
+		turno.setIniHrNoturna(iniHrNoturna);
+		turno.setHrsAntes(hrsAntes);
+		turno.setHrsDepois(hrsDepois);
+		turno.setHrsDescanso(hrsDescanso);
+		turno.setHrsMes(hrsMes);
+		turno.setIdEscala(escala);
+		turno.setInterjornada(interjornada);
+		turno.setMaxHrAlmoco(maxHrAlmoco);
+		turno.setMinHrAlmoco(minHrAlmoco);
+		
+		return turno;
+	}
+	
+	public Turno atualizar(Long id, EscalaRepository escalaRepository, TurnoRepository turnoRepository) {
+		Escala escala = escalaRepository.getReferenceById(idEscala);
+		Turno turno = turnoRepository.getReferenceById(id);
 		turno.setCod(cod);
 		turno.setDescricao(descricao);
 		turno.setFimHrNoturna(fimHrNoturna);
