@@ -12,62 +12,61 @@ public class TipoMarcacao {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private String descricao;
 	private int cod;
-	private String desc;
 	private LocalTime max;
 	private LocalTime min;
-	
 	
 	public TipoMarcacao() {
 		
 	}
 	
-public TipoMarcacao(int cod, String desc, LocalTime max, LocalTime min) {
+	public TipoMarcacao(String descricao, int cod, LocalTime min, LocalTime max) {
+		this.descricao = descricao;
 		this.cod = cod;
-		this.desc = desc;
-		this.max = max;
 		this.min = min;
+		this.max = max;
 	}
 
-public Long getId() {
-	return id;
-}
+	public Long getId() {
+		return id;
+	}
 
-public void setId(Long id) {
-	this.id = id;
-}
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-public int getCod() {
-	return cod;
-}
+	public String getDesc() {
+		return descricao;
+	}
 
-public void setCod(int cod) {
-	this.cod = cod;
-}
+	public void setDesc(String descricao) {
+		this.descricao = descricao;
+	}
 
-public String getDesc() {
-	return desc;
-}
+	public int getCod() {
+		return cod;
+	}
 
-public void setDesc(String desc) {
-	this.desc = desc;
-}
+	public void setCod(int cod) {
+		this.cod = cod;
+	}
 
-public LocalTime getMax() {
-	return max;
-}
+	public LocalTime getMax() {
+		return max;
+	}
 
-public void setMax(LocalTime max) {
-	this.max = max;
-}
+	public void setMax(LocalTime max) {
+		this.max = max;
+	}
 
-public LocalTime getMin() {
-	return min;
-}
+	public LocalTime getMin() {
+		return min;
+	}
 
-public void setMin(LocalTime min) {
-	this.min = min;
-}
+	public void setMin(LocalTime min) {
+		this.min = min;
+	}
 	
 	
 }

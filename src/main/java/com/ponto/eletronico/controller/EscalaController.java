@@ -47,7 +47,7 @@ public class EscalaController {
 		Escala escala = form.formulario();
 		escalaRepository.save(escala);
 		
-		URI uri = uriBuilder.path("/marcacao/{id}").buildAndExpand(escala.getId()).toUri();
+		URI uri = uriBuilder.path("/escala/{id}").buildAndExpand(escala.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(new EscalaDto(escala));
 	}

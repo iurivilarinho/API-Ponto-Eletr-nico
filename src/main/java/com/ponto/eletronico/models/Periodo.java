@@ -14,6 +14,7 @@ public class Periodo {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@ManyToOne
 	private Turno idTurno;
 	@ManyToOne
 	private Usuario idUsuario;

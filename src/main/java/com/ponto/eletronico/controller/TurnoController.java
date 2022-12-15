@@ -57,7 +57,7 @@ public class TurnoController {
 			Turno turno = form.formulario(escalaRepository);
 			turnoRepository.save(turno);
 			
-			URI uri = uriBuilder.path("/pessoas/{id}").buildAndExpand(turno.getId()).toUri();
+			URI uri = uriBuilder.path("/turno/{id}").buildAndExpand(turno.getId()).toUri();
 			return ResponseEntity.created(uri).body(new TurnoDto(turno));
 		}
 		

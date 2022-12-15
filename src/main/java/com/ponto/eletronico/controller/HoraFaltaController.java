@@ -50,7 +50,7 @@ public class HoraFaltaController {
 			HoraFalta horafalta = form.formulario(usuarioRepository);
 			faltaRepository.save(horafalta);
 			
-			URI uri = uriBuilder.path("/marcacao/{id}").buildAndExpand(horafalta.getId()).toUri();
+			URI uri = uriBuilder.path("/horafalta/{id}").buildAndExpand(horafalta.getId()).toUri();
 			
 			return ResponseEntity.created(uri).body(new HoraFaltaDto(horafalta));
 		}

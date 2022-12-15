@@ -55,7 +55,7 @@ public class UsuarioController {
 			Usuario usuario = form.formulario();
 			usuarioRepository.save(usuario);
 			
-			URI uri = uriBuilder.path("/pessoas/{id}").buildAndExpand(usuario.getId()).toUri();
+			URI uri = uriBuilder.path("/users/{id}").buildAndExpand(usuario.getId()).toUri();
 			return ResponseEntity.created(uri).body(new UsuarioDto(usuario));
 		}
 		

@@ -53,7 +53,7 @@ public class PeriodoController {
 			Periodo periodo = form.formulario(usuarioRepository, turnoRepository);
 			periodoRepository.save(periodo);
 			
-			URI uri = uriBuilder.path("/marcacao/{id}").buildAndExpand(periodo.getId()).toUri();
+			URI uri = uriBuilder.path("/periodo/{id}").buildAndExpand(periodo.getId()).toUri();
 			
 			return ResponseEntity.created(uri).body(new PeriodoDto(periodo));
 		}

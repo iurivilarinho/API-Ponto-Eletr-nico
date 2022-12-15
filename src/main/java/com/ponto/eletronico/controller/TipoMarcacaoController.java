@@ -47,7 +47,7 @@ public class TipoMarcacaoController {
 		TipoMarcacao tipo = form.formulario();
 		tipoRepository.save(tipo);
 		
-		URI uri = uriBuilder.path("/marcacao/{id}").buildAndExpand(tipo.getId()).toUri();
+		URI uri = uriBuilder.path("/tipomarcacao/{id}").buildAndExpand(tipo.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(new TipoMarcacaoDto(tipo));
 	}

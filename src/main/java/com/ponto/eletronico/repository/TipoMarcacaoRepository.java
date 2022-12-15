@@ -10,6 +10,6 @@ import com.ponto.eletronico.models.TipoMarcacao;
 
 public interface TipoMarcacaoRepository extends JpaRepository <TipoMarcacao, Long> {
 
-	Optional<TipoMarcacao> findByDesc(String desc);
+	Optional<TipoMarcacao> findByDescricao(String descricao);
 
 }

@@ -14,9 +14,9 @@ import com.ponto.eletronico.repository.TipoMarcacaoRepository;
 public class MarcacaoService {
 	
 	
-	public Marcacao tratativa(TipoMarcacaoRepository tipo) {
+	/*public Marcacao tratativa(TipoMarcacaoRepository tipo) {
 		Marcacao marcacao = new Marcacao();
-		Optional<TipoMarcacao> tipomarcacao = tipo.findByDesc(marcacao.getTipo().getDesc());
+		Optional<TipoRegistro> tipomarcacao = tipo.findByDesc(marcacao.getTipo().getDesc());
 		
 		if(tipomarcacao.isPresent()) {
 			marcacao.setTipo(marcacao.getTipo());
@@ -27,5 +27,5 @@ public class MarcacaoService {
 		}
 		
 		return marcacao;
-	}
+	}*/
 }
