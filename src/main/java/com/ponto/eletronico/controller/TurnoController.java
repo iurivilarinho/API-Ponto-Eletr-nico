@@ -33,69 +33,74 @@ public class TurnoController {
 	private TurnoRepository turnoRepository;
 	@Autowired
 	private EscalaRepository escalaRepository;
-	
-	
+
 	@GetMapping
 	@Transactional
 	public List<TurnoDto> lista(String descricao) {
-		
-		if(descricao == null) {
+
+		if (descricao == null) {
 			List<Turno> turno = turnoRepository.findAll();
 			return TurnoDto.converter(turno);
-			
-		}else {
-			
-			List<Turno> turno = turnoRepository.findByDescricao(descricao);/*Metodo criado detro de topicoRepository para busca somente um atributo de uma entidade(nesse caso especifico busca o nome dentro de uma entidade que se relaciona com topico findByCursoNome  Curso= entidade Nome = atributo de curso)*/
+
+		} else {
+
+			List<Turno> turno = turnoRepository
+					.findByDescricao(descricao);/*
+												 * Metodo criado detro de topicoRepository para busca somente um
+												 * atributo de uma entidade(nesse caso especifico busca o nome dentro de
+												 * uma entidade que se relaciona com topico findByCursoNome Curso=
+												 * entidade Nome = atributo de curso)
+												 */
 			return TurnoDto.converter(turno);
 		}
 	}
-		
-		@PostMapping
-		@Transactional
-		public ResponseEntity<TurnoDto> cadastrar(@RequestBody @Valid TurnoForm form, UriComponentsBuilder uriBuilder ) {
-			
-			Turno turno = form.formulario(escalaRepository);
-			turnoRepository.save(turno);
-			
-			URI uri = uriBuilder.path("/turno/{id}").buildAndExpand(turno.getId()).toUri();
-			return ResponseEntity.created(uri).body(new TurnoDto(turno));
+
+	@PostMapping
+	@Transactional
+	public ResponseEntity<TurnoDto> cadastrar(@RequestBody @Valid TurnoForm form, UriComponentsBuilder uriBuilder) {
+
+		Turno turno = form.formulario(escalaRepository);
+		turnoRepository.save(turno);
+
+		URI uri = uriBuilder.path("/turno/{id}").buildAndExpand(turno.getId()).toUri();
+		return ResponseEntity.created(uri).body(new TurnoDto(turno));
+	}
+
+	@GetMapping("/{id}")
+	@Transactional
+	public ResponseEntity<TurnoDto> detalhar(@PathVariable Long id) {
+		Optional<Turno> turno = turnoRepository.findById(id);
+		if (turno.isPresent()) {
+			return ResponseEntity.ok(new TurnoDto(turno.get()));
 		}
-		
-		@GetMapping("/{id}")
-		@Transactional
-		public ResponseEntity <TurnoDto> detalhar(@PathVariable Long id) {
-			Optional <Turno> turno = turnoRepository.findById(id);
-			if(turno.isPresent()) {
-				return ResponseEntity.ok(new TurnoDto(turno.get()));
-			}
-			
-			return ResponseEntity.notFound().build();
-			}
-		
-		@PutMapping("/{id}")
-		@Transactional
-		public ResponseEntity<TurnoDto> atualizar(@PathVariable Long id, @RequestBody @Valid TurnoForm form) {
-			Optional <Turno> optional = turnoRepository.findById(id);
-			if(optional.isPresent()) {
-				Turno turno = form.atualizar(id, escalaRepository, turnoRepository);
-				return ResponseEntity.ok (new TurnoDto(turno));
-			}
-			
-			return ResponseEntity.notFound().build();
+
+		return ResponseEntity.notFound().build();
+	}
+
+	@PutMapping("/{id}")
+	@Transactional
+	public ResponseEntity<TurnoDto> atualizar(@PathVariable Long id, @RequestBody @Valid TurnoForm form) {
+		Optional<Turno> optional = turnoRepository.findById(id);
+		if (optional.isPresent()) {
+			Turno turno = form.atualizar(id, escalaRepository, turnoRepository);
+			return ResponseEntity.ok(new TurnoDto(turno));
 		}
-			
-		@DeleteMapping("/{id}")
-		@Transactional
-		public ResponseEntity<?> remover(@PathVariable Long id) {
-			Optional <Turno> optional = turnoRepository.findById(id);
-			if(optional.isPresent()) {
-				
-				turnoRepository.deleteById(id);
-			
-			return ResponseEntity.ok ().build();
-				
-			}
-			
-			return ResponseEntity.notFound().build();
-			}
+
+		return ResponseEntity.notFound().build();
+	}
+
+	@DeleteMapping("/{id}")
+	@Transactional
+	public ResponseEntity<?> remover(@PathVariable Long id) {
+		Optional<Turno> optional = turnoRepository.findById(id);
+		if (optional.isPresent()) {
+
+			turnoRepository.deleteById(id);
+
+			return ResponseEntity.ok().build();
+
+		}
+
+		return ResponseEntity.notFound().build();
+	}
 }

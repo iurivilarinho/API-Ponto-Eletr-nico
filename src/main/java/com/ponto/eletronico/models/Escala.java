@@ -8,7 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Escala {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,18 +22,20 @@ public class Escala {
 	private Boolean dsr;
 	private LocalTime entrada;
 	private LocalTime saida;
+	private LocalTime hrsDia;
 	
 	public Escala() {
 		
 	}
 	
-	public Escala(int cod, String diaSemana, Boolean diaTrabalhado, LocalTime entrada, LocalTime saida, Boolean dsr) {
+	public Escala(int cod, String diaSemana, Boolean diaTrabalhado, LocalTime entrada, LocalTime saida, Boolean dsr, LocalTime hrsDia) {
 		this.cod = cod;
 		this.diaSemana = diaSemana;
 		this.diaTrabalhado = diaTrabalhado;
 		this.dsr = dsr;
 		this.entrada = entrada;
 		this.saida = saida;
+		this.hrsDia = hrsDia;
 	}
 
 	public Long getId() {
@@ -88,6 +93,14 @@ public class Escala {
 
 	public void setSaida(LocalTime saida) {
 		this.saida = saida;
+	}
+
+	public LocalTime getHrsDia() {
+		return hrsDia;
+	}
+
+	public void setHrsDia(LocalTime hrsDia) {
+		this.hrsDia = hrsDia;
 	}
 	
 	

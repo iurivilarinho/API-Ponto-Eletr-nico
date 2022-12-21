@@ -22,16 +22,18 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.ponto.eletronico.controller.dto.MarcacaoDto;
 import com.ponto.eletronico.form.MarcacaoForm;
 import com.ponto.eletronico.models.Marcacao;
+import com.ponto.eletronico.repository.HoraExtraRepository;
+import com.ponto.eletronico.repository.HoraFaltaRepository;
 import com.ponto.eletronico.repository.MarcacaoRepository;
 import com.ponto.eletronico.repository.TipoMarcacaoRepository;
 import com.ponto.eletronico.repository.TurnoRepository;
 import com.ponto.eletronico.repository.UsuarioRepository;
-
+import com.ponto.eletronico.services.MarcacaoService;
 
 @RestController
 @RequestMapping("/marcacao")
 public class MarcacaoController {
-	
+
 	@Autowired
 	private MarcacaoRepository marcacaoRepository;
 	@Autowired
@@ -40,62 +42,69 @@ public class MarcacaoController {
 	private TurnoRepository turnoRepository;
 	@Autowired
 	private TipoMarcacaoRepository tipoRepository;
-	
+	@Autowired
+	HoraExtraRepository extraRepository;
+	@Autowired
+	HoraFaltaRepository faltaRepository;
+
 	@GetMapping
 	@Transactional
-	public List<MarcacaoDto> lista(){
+	public List<MarcacaoDto> lista() {
 		List<Marcacao> marcacao = marcacaoRepository.findAll();
 		return MarcacaoDto.converter(marcacao);
 	}
-	
+
 	@PostMapping
 	@Transactional
-	public ResponseEntity<MarcacaoDto> cadastrar(@RequestBody @Valid MarcacaoForm form, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<MarcacaoDto> cadastrar(@RequestBody @Valid MarcacaoForm form, MarcacaoService service,
+			UriComponentsBuilder uriBuilder) {
 		Marcacao marcacao = form.formulario(turnoRepository, usuarioRepository, tipoRepository);
 		marcacaoRepository.save(marcacao);
-		
+		service.gerarHoraExtra(form, turnoRepository, marcacaoRepository, extraRepository,faltaRepository, usuarioRepository);
+
 		URI uri = uriBuilder.path("/marcacao/{id}").buildAndExpand(marcacao.getId()).toUri();
-		
+
 		return ResponseEntity.created(uri).body(new MarcacaoDto(marcacao));
+
 	}
-	
+
 	@GetMapping("/{id}")
 	@Transactional
-	public ResponseEntity <MarcacaoDto> detalhar(@PathVariable Long id) {
-		Optional <Marcacao> marcacao = marcacaoRepository.findById(id);
-		if(marcacao.isPresent()) {
+	public ResponseEntity<MarcacaoDto> detalhar(@PathVariable Long id) {
+		Optional<Marcacao> marcacao = marcacaoRepository.findById(id);
+		if (marcacao.isPresent()) {
 			return ResponseEntity.ok(new MarcacaoDto(marcacao.get()));
 		}
-		
+
 		return ResponseEntity.notFound().build();
-		}
-	
+	}
+
 	@PutMapping("/{id}")
 	@Transactional
 	public ResponseEntity<MarcacaoDto> atualizar(@PathVariable Long id, @RequestBody @Valid MarcacaoForm form) {
-		Optional <Marcacao> optional = marcacaoRepository.findById(id);
-		if(optional.isPresent()) {  
-			Marcacao marcacao = form.atualizar(id, marcacaoRepository, turnoRepository, usuarioRepository, tipoRepository );
-			return ResponseEntity.ok (new MarcacaoDto(marcacao));
+		Optional<Marcacao> optional = marcacaoRepository.findById(id);
+		if (optional.isPresent()) {
+			Marcacao marcacao = form.atualizar(id, marcacaoRepository, turnoRepository, usuarioRepository,
+					tipoRepository);
+			return ResponseEntity.ok(new MarcacaoDto(marcacao));
 		}
-		
+
 		return ResponseEntity.notFound().build();
 	}
-	
-	
+
 	@DeleteMapping("/{id}")
 	@Transactional
 	public ResponseEntity<?> remover(@PathVariable Long id) {
-		Optional <Marcacao> optional = marcacaoRepository.findById(id);
-		if(optional.isPresent()) {
-			
+		Optional<Marcacao> optional = marcacaoRepository.findById(id);
+		if (optional.isPresent()) {
+
 			marcacaoRepository.deleteById(id);
-		
-		return ResponseEntity.ok ().build();
-			
+
+			return ResponseEntity.ok().build();
+
 		}
-		
+
 		return ResponseEntity.notFound().build();
-		}
+	}
 
 }
